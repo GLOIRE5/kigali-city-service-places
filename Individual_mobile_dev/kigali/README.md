@@ -2,156 +2,151 @@
 
 A Flutter mobile application that helps Kigali residents locate and navigate to essential public services and leisure locations such as hospitals, police stations, libraries, restaurants, cafés, parks, and tourist attractions.
 
-## Features
+# Features
 
-### Authentication
+# Authentication
 
 - Email & password sign-up and sign-in via **Firebase Authentication**
 - **Email verification** required before accessing the app
 - User profiles stored in **Cloud Firestore** linked by UID
 - Password reset via email
 
-### Location Listings (CRUD)
+# Location Listings (CRUD)
 
-- **Create** new service/place listings with name, category, address, contact, description, and GPS coordinates
-- **Read** all listings in a shared real-time directory
-- **Update** listings you created
-- **Delete** listings you created
+- Create new service/place listings with name, category, address, contact, description, and GPS coordinates
+- Read all listings in a shared real-time directory
+- Update listings you created
+-  Delete listings you created
 - All changes reflect immediately via Firestore real-time listeners
 
-### Directory Search & Filtering
+# Directory Search & Filtering
 
 - Search listings by name or address
 - Filter by category (Hospital, Police Station, Library, Restaurant, Café, Park, Tourist Attraction)
 - Results update dynamically as Firestore data changes
 
-### Detail Page & Map Integration
+# Detail Page & Map Integration
 
 - Detailed view of each listing with all information
 - **Embedded Google Map** with a marker showing the location
 - **"Get Directions"** button launches Google Maps for turn-by-turn navigation
 - Tap-to-call contact numbers
 
-### Map View
+# Map View
 
 - Full-screen Google Map displaying all listings as markers
 - Color-coded markers by category
 - Category filter chips to show/hide specific types
 - Satellite/street view toggle
 
-### Settings
+# Settings
 
 - Displays authenticated user's profile information
 - Toggle for enabling/disabling location-based notifications
 - Sign out with confirmation
 
-## Architecture
+# Architecture
 
-```
 lib/
-├── main.dart                          # App entry point, Provider setup, auth routing
-├── firebase_options.dart              # Firebase configuration (auto-generated)
+├── main.dart                          
+├── firebase_options.dart              
 ├── models/
-│   └── listing.dart                   # Listing data model + Firestore serialization
+│   └── listing.dart                   
 ├── services/
-│   ├── auth_service.dart              # Firebase Auth operations
-│   └── firestore_service.dart         # Firestore CRUD operations
+│   ├── auth_service.dart             
+│   └── firestore_service.dart         
 ├── providers/
-│   ├── auth_provider.dart             # Authentication state (ChangeNotifier)
-│   ├── listings_provider.dart         # Listings state with search/filter (ChangeNotifier)
-│   └── settings_provider.dart         # Notification preferences (ChangeNotifier)
+│   ├── auth_provider.dart             
+│   ├── listings_provider.dart         
+│   └── settings_provider.dart         
 ├── screens/
-│   ├── sign_in_screen.dart            # Login screen
-│   ├── register_screen.dart           # Registration screen
-│   ├── email_verification_screen.dart # Email verification gate
-│   ├── home_shell.dart                # BottomNavigationBar shell
-│   ├── directory_screen.dart          # Browse all listings
-│   ├── my_listings_screen.dart        # User's own listings (edit/delete)
-│   ├── map_screen.dart                # Google Map with all markers
-│   ├── settings_screen.dart           # Profile & preferences
-│   ├── listing_detail_screen.dart     # Detail view with embedded map
-│   └── listing_form_screen.dart       # Create/edit listing form
+│   ├── sign_in_screen.dart            
+│   ├── register_screen.dart           
+│   ├── email_verification_screen.dart 
+│   ├── home_shell.dart                
+│   ├── directory_screen.dart         
+│   ├── my_listings_screen.dart        
+│   ├── map_screen.dart                
+│   ├── settings_screen.dart           
+│   ├── listing_detail_screen.dart    
+│   └── listing_form_screen.dart       
 └── widgets/
-    └── listing_card.dart              # Reusable listing card widget
-```
+    └── listing_card.dart              
 
-## State Management
 
-Uses **Provider** with `ChangeNotifier` pattern:
+# State Management
 
-- **AuthProvider** — manages Firebase Auth state, sign-in/sign-up, email verification
-- **ListingsProvider** — real-time Firestore listener, CRUD operations, search & category filtering
-- **SettingsProvider** — notification preference toggle via SharedPreferences
+Uses Provider with `ChangeNotifier` pattern:
 
-All Firestore interactions go through a **dedicated service layer** (`AuthService`, `FirestoreService`). No direct database queries in UI widgets.
+- AuthProvider manages Firebase Auth state, sign-in/sign-up, email verification
+- ListingsProvider real-time Firestore listener, CRUD operations, search & category filtering
+- SettingsProvider notification preference toggle via SharedPreferences
 
-## Tech Stack
+All Firestore interactions go through a dedicated service layer (`AuthService`, `FirestoreService`). No direct database queries in UI widgets.
 
-| Technology          | Purpose                                                   |
-| ------------------- | --------------------------------------------------------- |
-| Flutter             | Cross-platform UI framework                               |
-| Firebase Auth       | User authentication                                       |
-| Cloud Firestore     | Real-time database                                        |
-| Google Maps Flutter | Map display & markers                                     |
-| Provider            | State management                                          |
-| Geolocator          | Device location                                           |
-| URL Launcher        | External navigation (Google Maps directions, phone calls) |
-| SharedPreferences   | Local settings persistence                                |
-| HTTP                | Geocoding via Nominatim API                               |
+# Tech Stack
 
-## Navigation
+ Technology           Purpose                                                    
+ Flutter             Cross-platform UI framework                               
+ Firebase Auth       User authentication                                       
+ Cloud Firestore      Real-time database                                        
+ Google Maps Flutter  Map display & markers                                     Provider             State management                                          
+Geolocator          Device location                                           
+URL Launcher         External navigation (Google Maps directions, phone calls) 
+SharedPreferences    Local settings persistence                                
+ HTTP                 Geocoding via Nominatim API                               
 
-**BottomNavigationBar** with 4 tabs:
+# Navigation
 
-1. **Directory** — Browse and search all listings
-2. **My Listings** — Manage your own listings (create, edit, delete)
-3. **Map** — View all listings on Google Map
-4. **Settings** — Profile info, notification toggle, sign out
+BottomNavigationBar with 4 tabs:
 
-## Setup
+1. Directory — Browse and search all listings
+2. My Listings — Manage your own listings (create, edit, delete)
+3. Map — View all listings on Google Map
+4. Settings— Profile info, notification toggle, sign out
 
-### Prerequisites
+# Setup
+
+# Prerequisites
 
 - Flutter SDK ^3.10.4
 - A Firebase project with Authentication and Firestore enabled
 - Google Maps API key
 
-### Firebase Configuration
+# Firebase Configuration
 
-1. Enable **Email/Password** sign-in in Firebase Console → Authentication → Sign-in method
-2. Create a **Firestore Database** in Firebase Console
+1. Enable Email/Password sign-in in Firebase Console → Authentication → Sign-in method
+2. Create a Firestore Database in Firebase Console
 3. The `firebase_options.dart` file is already configured for this project
 
-### Google Maps API Key
+# Google Maps API Key
 
 The API key is configured in:
 
-- **Android**: `android/local.properties` → `MAPS_API_KEY=YOUR_KEY`
-- **iOS**: `ios/Flutter/Secrets.xcconfig` → `MAPS_API_KEY=YOUR_KEY`
-- **Web**: `web/index.html` → Google Maps JS script tag
+- Android: `android/local.properties` → `MAPS_API_KEY=YOUR_KEY`
+- iOS: `ios/Flutter/Secrets.xcconfig` → `MAPS_API_KEY=YOUR_KEY`
+Web: `web/index.html` → Google Maps JS script tag
 
-### Run the App
+# Run the App
+bash
 
-```bash
 flutter pub get
 flutter run
-```
 
-## Firestore Data Structure
+# Firestore Data Structure
 
-### `users` collection
+# users collection
 
-```
 users/{uid}
 ├── displayName: string
 ├── email: string
 ├── createdAt: timestamp
 └── notificationsEnabled: boolean
-```
 
-### `listings` collection
 
-```
+# listings collection
+
+
 listings/{docId}
 ├── name: string
 ├── category: string
@@ -163,7 +158,7 @@ listings/{docId}
 ├── createdBy: string (user UID)
 ├── timestamp: timestamp
 └── imageUrl: string (optional)
-```
+
 
 ## Categories
 
